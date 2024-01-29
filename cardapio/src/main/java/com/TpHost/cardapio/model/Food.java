@@ -10,25 +10,11 @@ import lombok.*;
 @Entity(name = "tb-foods")
 @Table(name = "tb-foods", schema = "public")
 public class Food {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_food")
     private Long id;
-
-
-    @Column(length = 50, nullable = false)
-    @Setter
     private String title;
-
-
-    @Column(length = 50, nullable = false)
-    @Setter
     private String image;
-
-
-    @Column(length = 50, nullable = false)
-    @Setter
     private Integer price;
 
 

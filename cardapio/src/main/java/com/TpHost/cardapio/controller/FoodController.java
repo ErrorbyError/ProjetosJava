@@ -10,20 +10,18 @@ import com.TpHost.cardapio.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@Controller   // usamos isso para mapear esta classe para ser reconhecida como um controller.
+@RestController   // usamos isso para mapear esta classe para ser reconhecida como um controller.
 @RequestMapping("food") // estamos dizendo que este controller vai controlar esse endpoint "\food"
 public class FoodController {
 
     @Autowired // usamos o autowired para que ele seja responsável para criar uma instância para nós.
     FoodRepository foodRepository;
+
 
     @GetMapping
     // basicamente diz que quando estiverem no endpoint "food" e usarem o metodo GET, este metodo será usado.
@@ -33,10 +31,10 @@ public class FoodController {
 
 //        como estamos retornando um List, mas o dado é um record. precisamos utilizar o Stream junto com o Map
 //        o metodo stream vai pegar tudo que está vindo do repositorio atraves do metodo findall().
-//        e depois vai por ele dentro de um funil e para cada objeto que passar no funil, vamos criar um DTO.
+//        e depois vai por ele dentro de um "funil" e para cada objeto que passar no "funil", vamos criar um DTO.
 
 
-        List<FoodResponseDTO> foodList = (List<FoodResponseDTO>) foodRepository.findAll().stream().map(FoodResponseDTO::new);
+        List<FoodResponseDTO> foodList = foodRepository.findAll().stream().map(FoodResponseDTO::new).toList();
 
 
         return foodList;
