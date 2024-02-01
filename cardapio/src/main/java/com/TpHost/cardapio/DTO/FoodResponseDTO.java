@@ -1,4 +1,6 @@
-package com.TpHost.cardapio.model;
+package com.TpHost.cardapio.DTO;
+
+import com.TpHost.cardapio.model.Food;
 
 // ao inves de usar uma classe, usaremos o "record" que será usado nas respostas e nas request da aplicação.
 // pois como não iremos usar um get ou set, pois ele só vai representar os dados.

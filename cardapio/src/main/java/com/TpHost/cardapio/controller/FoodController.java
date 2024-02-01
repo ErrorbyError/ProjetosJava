@@ -4,15 +4,16 @@ package com.TpHost.cardapio.controller;
 // controller - concentra os request para pegar os dados do cadarpio e adcionar novas informações no banco de dados
 
 import com.TpHost.cardapio.model.Food;
-import com.TpHost.cardapio.model.FoodResponseDTO;
-import com.TpHost.cardapio.model.foodRequestDTO;
+import com.TpHost.cardapio.DTO.FoodResponseDTO;
+import com.TpHost.cardapio.DTO.FoodRequestDTO;
 import com.TpHost.cardapio.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController   // usamos isso para mapear esta classe para ser reconhecida como um controller.
@@ -45,7 +46,7 @@ public class FoodController {
 //    usamos o requestbody pq o cliente vai salva no body da nossa palicação, enttão temos que pegar as informações nesse body
 //    vamos criar um novo record.
     @PostMapping
-    public void saveFood(@RequestBody foodRequestDTO data){
+    public void saveFood(@RequestBody FoodRequestDTO data){
 //        aqui o cliente vai enviar  para o body da aplicação.
 
 //        como estamos salvando um dado, e esse dado tem que ser no formato de entidade.
@@ -58,6 +59,33 @@ public class FoodController {
         foodRepository.save(foodData);
 
     }
+
+
+
+    @PutMapping()
+    @Transactional
+    public ResponseEntity updateFoood(@RequestBody FoodRequestDTO data){
+        Optional<Food> optionalFood = foodRepository.findById(data.id());
+        if (optionalFood.isPresent()){
+            Food foodExisted = optionalFood.get();
+            foodExisted.setTitle(data.title());
+            foodExisted.setImage(data.image());
+            foodExisted.setPrice(data.price());
+            return ResponseEntity.ok(foodExisted);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+
+
+
+    }
+
+
+
+
+
+
 
 
 }
