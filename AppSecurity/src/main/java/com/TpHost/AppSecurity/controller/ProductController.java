@@ -3,6 +3,7 @@ package com.TpHost.AppSecurity.controller;
 import com.TpHost.AppSecurity.DTO.RequestProductDTO;
 import com.TpHost.AppSecurity.model.Product;
 import com.TpHost.AppSecurity.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class ProductController {
             product.setPrice(data.price());
             return ResponseEntity.ok(product);
         }else {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
     }
 
@@ -59,7 +60,7 @@ public class ProductController {
             product.setActive(false);
             return ResponseEntity.noContent().build();
         }else {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
     }
 
